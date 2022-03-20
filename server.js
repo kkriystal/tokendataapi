@@ -1,34 +1,32 @@
-require("dotenv").config()
-const express = require('express')
+require("dotenv").config();
+const express = require("express");
 const rateLimit = require("express-rate-limit");
-const morgan = require('morgan')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const db = require('./utils/db')
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const db = require("./utils/db");
 
-const projectTwoRoutes = require('./routes/projectTwo')
-const projectOneRoutes = require('./routes/projectOne')
-const getChainData = require("./utils/getChainData")
-const removeTrailingSlash = require('./middleware/removeTrailingSlash');
+const projectTwoRoutes = require("./routes/projectTwo");
+const projectOneRoutes = require("./routes/projectOne");
+const getChainData = require("./utils/getChainData");
+const removeTrailingSlash = require("./middleware/removeTrailingSlash");
 
-
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
 // Call getChainData here to begin chain data update loop and start caching new data to database
-getChainData() 
+getChainData();
 
-const app = express()
+const app = express();
 
 // Limit request rate
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests per windowMs
 });
- 
-//  apply to all requests
-app.use(cors())
-app.use(bodyParser.text())
 
+//  apply to all requests
+app.use(cors());
+app.use(bodyParser.text());
 
 // limit requests
 app.use(limiter);
@@ -36,52 +34,56 @@ app.use(limiter);
 // remove trailing slash
 app.use(removeTrailingSlash);
 
-
 // Logging
-app.use(morgan('tiny'))
+app.use(morgan("tiny"));
 
 // Remove trailing slash
 
 // Routes
 app.use(/^\/$/, (req, res) => {
-  res.send("Welcome to the Fomocraft API!")
-})
+  res.send("Welcome to the Fomocraft API!");
+});
 
-
-
-// add cached data to req
-app.use('/v1/gennix', async (req, res, next) => {
-  const client = db.getClient()
-  try {
-    await db.getCachedprojectTwoData(client).then(result => req.chainData = result)
-  }
-  catch(err){
-    console.log("error getting data")
-    console.log(err)
-  }
-  next()
-})
+// health check
+app.use("/v1/health", (req, res) => {
+  res.status(200).send("Ok");
+});
 
 // add cached data to req
-app.use('/v1/projectOne', async (req, res, next) => {
-  const client = db.getClient()
+app.use("/v1/gennix", async (req, res, next) => {
+  const client = db.getClient();
   try {
-    await db.getCachedprojectOneData(client).then(result => req.chainData = result)
+    await db
+      .getCachedprojectTwoData(client)
+      .then((result) => (req.chainData = result));
+  } catch (err) {
+    console.log("error getting data");
+    console.log(err);
   }
-  catch(err){
-    console.log("error getting data")
-    console.log(err)
-  }
-  next()
-})
+  next();
+});
 
-app.use('/v1/projectOne', projectOneRoutes)
-app.use('/v1/gennix', projectTwoRoutes)
+// add cached data to req
+app.use("/v1/projectOne", async (req, res, next) => {
+  const client = db.getClient();
+  try {
+    await db
+      .getCachedprojectOneData(client)
+      .then((result) => (req.chainData = result));
+  } catch (err) {
+    console.log("error getting data");
+    console.log(err);
+  }
+  next();
+});
+
+app.use("/v1/projectOne", projectOneRoutes);
+app.use("/v1/gennix", projectTwoRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({error: true, message: "Resource not found"})
-})
+  res.status(404).json({ error: true, message: "Resource not found" });
+});
 
-app.listen(PORT)
+app.listen(PORT);
 
-console.log(`App listening on ${PORT}`)
+console.log(`App listening on ${PORT}`);

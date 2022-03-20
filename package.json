@@ -6,7 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "docker:build": "docker build --platform=linux/amd64 -t tokendataapi .",
+    "docker:tag": "docker tag tokendataapi:latest 366276528259.dkr.ecr.us-east-1.amazonaws.com/tokendataapi:latest",
+    "docker:push": "docker push 366276528259.dkr.ecr.us-east-1.amazonaws.com/tokendataapi:latest",
+    "aws:login": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 366276528259.dkr.ecr.us-east-1.amazonaws.com",
+    "aws:build": "npm run aws:login && npm run docker:build && npm run docker:tag && npm run docker:push",
+    "aws:deploy": "aws ecs update-service --cluster token-data-api-cluster --service token-data-api-service --force-new-deployment --region=us-east-1",
+    "aws:release": "npm run aws:build && npm run aws:deploy"
   },
   "repository": {
     "type": "git",
