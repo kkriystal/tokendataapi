@@ -2,7 +2,8 @@ const schedule = require("node-schedule") // Used to set schedule for calling In
 const Web3 = require("web3") // Used for connecting with node endpoints (Ethereum and BSC for this project) to get live information about on chain data
 const sleep = require('ko-sleep'); // Used to set a time delay between retrying Web3 connections
 const getProjectOneData = require("./getProjectOneData") // Logic for collecting and calculating all data for ProjectOne
-const getProjectTwoData = require("./getProjectTwoData") // Logic for collecting and calculating all data for ProjectTwo
+const getProjectTwoData = require("./getProjectTwoData"); // Logic for collecting and calculating all data for ProjectTwo
+const gettipsyData = require("./getTipsyData");
 
 
 // const getPriceData = require("./getPriceData") // Unused in this example project
@@ -49,6 +50,8 @@ const setupWeb3 = async () => {
 const updateData = async (web3_collection) => {
   schedule.scheduleJob("0,15,30,45,59 * * * * *", async () => {    
     getProjectTwoData(web3_collection)
+    gettipsyData(web3_collection)
+    
   })
 }
 

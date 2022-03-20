@@ -7,7 +7,7 @@ const getPriceData = async () => {
     ids: ["royale"],
     vs_currencies: ["usd"],
   });
-  return priceData;
-};
+  return priceData
+}
 
-module.exports = getPriceData;
+module.exports = getPriceData

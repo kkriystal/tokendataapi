@@ -38,6 +38,23 @@ updateprojectOneData = async (chainData, client) => {
     }
 }
 
+updateTipsyCoin = async (chainData, client) => {
+    try {
+        const database = client.db('fomo')
+        const collection = database.collection('tipsy')
+        chainData.timestamp = Date.now()
+        let newChainData = Object.assign({}, chainData)
+        newChainData._id = ObjectId()
+        let deleteResult = await collection.deleteMany( { timestamp : {"$lt" : Date.now() - 60 * 1000 }}) 
+        console.log(`Deleted: ${deleteResult.deletedCount}`)
+        await collection.insertOne(newChainData)
+        console.log("Inserted new entries")
+    } 
+    catch(err) {
+        console.log(err)
+    }
+}
+
 
 updateprojectTwoData = async (chainData, client) => {
     try {
@@ -83,12 +100,27 @@ getCachedprojectTwoData = async (client) => {
     }
 }
 
+getCachedTipsyData = async (client) => {
+    try {
+        const database = client.db('fomo')
+        const collection = database.collection('tipsy')
+        cachedData = await collection.find().sort({ _id: -1 }).limit(1).toArray()
+        cachedData = cachedData[0]
+        return cachedData    
+    } 
+    catch(err) {
+        console.log(err)
+    }
+}
+
 
 module.exports = {
     getClient,
     updateprojectOneData,
     getCachedprojectOneData,
     updateprojectTwoData,
-    getCachedprojectTwoData
+    getCachedprojectTwoData,
+    getCachedTipsyData,
+    updateTipsyCoin
 }
 
