@@ -8,7 +8,7 @@ const db = require("./utils/db");
 
 const projectTwoRoutes = require("./routes/projectTwo");
 const projectOneRoutes = require("./routes/projectOne");
-const tipsyRoutes = require("./routes/tipsy");
+const judasRoutes = require("./routes/judas");
 const getChainData = require("./utils/getChainData");
 const removeTrailingSlash = require("./middleware/removeTrailingSlash");
 
@@ -74,11 +74,11 @@ app.use("/v1/projectOne", async (req, res, next) => {
 });
 
 // add cached data to req
-app.use("/v1/tipsy", async (req, res, next) => {
+app.use("/v1/judas", async (req, res, next) => {
   const client = db.getClient();
   try {
     await db
-      .getCachedTipsyData(client)
+      .getCachedJudasData(client)
       .then((result) => (req.chainData = result));
   } catch (err) {
     console.log("error getting data");
@@ -89,7 +89,7 @@ app.use("/v1/tipsy", async (req, res, next) => {
 
 app.use("/v1/projectOne", projectOneRoutes);
 app.use("/v1/gennix", projectTwoRoutes);
-app.use("/v1/tipsy", tipsyRoutes);
+app.use("/v1/judas", judasRoutes);
 
 // health check endpoint
 app.use("/v1/health", (req, res) => {
