@@ -4,7 +4,7 @@ const numeral = require("numeral")
 const db = require("./db")
 
 const gettipsyData = async (web3s) => {
-    const {web3, bsc_web3} = web3s
+    const {web3} = web3s
     const blockNumber = await web3.eth.getBlockNumber() 
     const {tipsy_address} = addresses
 
