@@ -4,7 +4,7 @@ const numeral = require("numeral") // NPM package for formatting numbers
 const db = require("./db") // Util for setting up DB and main DB methods
 
 // Async function which takes in web3 collection, makes web3 calls to get current on chain data, formats data, and caches formatted data to MongoDB
-const getProjectOneData = async (web3s) => {
+const getJudasData = async (web3s) => {
     // Unpack web3 objects for Ethereum and BSC
     const {web3, bsc_web3} = web3s
     // Get Ethereum block number 
