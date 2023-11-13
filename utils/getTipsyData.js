@@ -53,7 +53,7 @@ const gettipsyData = async (web3s) => {
     // Set converted and formatted value, block, and timestamp
     const tokendata = tokenData.eth
 
-    Object.keys(tokendata_bsc).forEach(key => {
+    Object.keys(tokendata).forEach(key => {
       tokendata[key].value = convert(tokendata[key].value, 18)
       tokendata[key].formattedValue = numeral(tokendata[key].value).format()
       tokendata[key].block = blockNumber
