@@ -37,7 +37,7 @@ const setupWeb3 = async () => {
   // Only a single Infura endpoint is provided for the Ethereum web3 object as Infura endpoints are highly stable. Note that WebsocketProvider is used here, if you prefer an HTTP endpoint make sure to change it to HttpProvider.
   while (true){
     // INFURA_URL is available as an environment variable. It's recommended to use dotenv for setting env variables in your development environment: https://www.npmjs.com/package/dotenv
-    web3 = await new Web3(new Web3.providers.WebsocketProvider("https://mainnet.infura.io/v3/83a9417cb99946ec81a63b4eb6d45b39"))
+    web3 = await new Web3(new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/83a9417cb99946ec81a63b4eb6d45b39"))
     if (web3.currentProvider) break
     await sleep(100)
   }
