@@ -45,9 +45,9 @@ const gettipsyData = async (web3s) => {
   
     // Set names
   
-    tokenData.eth.totalSupply.name = "Total Supply BSC"
+    tokenData.eth.totalSupply.name = "Total Supply ETH"
   
-    tokenData.eth.circulatingSupply.name = "Circulating Supply BSC"
+    tokenData.eth.circulatingSupply.name = "Circulating Supply ETH"
   
      
     // Set converted and formatted value, block, and timestamp
