@@ -30,32 +30,32 @@ const gettipsyData = async (web3s) => {
     }
   
 
-    // Get base values 
-    tokenData.eth.totalSupply.value = await tipsy.methods.totalSupply().call()
+    // // Get base values 
+    // tokenData.eth.totalSupply.value = await tipsy.methods.totalSupply().call()
 
 
-    // Circulating supply
-    tokenData.eth.circulatingSupply.value = tokenData.eth.totalSupply.value
+    // // Circulating supply
+    // tokenData.eth.circulatingSupply.value = tokenData.eth.totalSupply.value
 
-    // Set up descriptions
-    tokenData.eth.totalSupply.description = "Total supply of judas on ETH"
+    // // Set up descriptions
+    // tokenData.eth.totalSupply.description = "Total supply of judas on ETH"
   
-    tokenData.eth.circulatingSupply.description = "Circulating supply of judas on ETH"
+    // tokenData.eth.circulatingSupply.description = "Circulating supply of judas on ETH"
   
   
-    // Set names
+    // // Set names
   
-    tokenData.eth.totalSupply.name = "Total Supply ETH"
+    // tokenData.eth.totalSupply.name = "Total Supply ETH"
   
-    tokenData.eth.circulatingSupply.name = "Circulating Supply ETH"
+    // tokenData.eth.circulatingSupply.name = "Circulating Supply ETH"
   
      
     // Set converted and formatted value, block, and timestamp
     const tokendata = tokenData.eth
 
     Object.keys(tokendata).forEach(key => {
-      tokendata[key].value = convert(tokendata[key].value, 18)
-      tokendata[key].formattedValue = numeral(tokendata[key].value).format()
+      // tokendata[key].value = convert(tokendata[key].value, 18)
+      // tokendata[key].formattedValue = numeral(tokendata[key].value).format()
       tokendata[key].block = blockNumber
       tokendata[key].timestamp = Date()
     })
