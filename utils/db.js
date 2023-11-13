@@ -100,10 +100,10 @@ getCachedprojectTwoData = async (client) => {
     }
 }
 
-getCachedTipsyData = async (client) => {
+getCachedJudasData = async (client) => {
     try {
         const database = client.db('fomo')
-        const collection = database.collection('tipsy')
+        const collection = database.collection('judas')
         cachedData = await collection.find().sort({ _id: -1 }).limit(1).toArray()
         cachedData = cachedData[0]
         return cachedData    
