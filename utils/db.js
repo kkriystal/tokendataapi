@@ -38,7 +38,7 @@ updateprojectOneData = async (chainData, client) => {
     }
 }
 
-updateJudas = async (chainData, client) => {
+updateJudasData = async (chainData, client) => {
     try {
         const database = client.db('fomo')
         const collection = database.collection('tipsy')
