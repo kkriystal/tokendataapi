@@ -41,7 +41,7 @@ updateprojectOneData = async (chainData, client) => {
 updateJudasData = async (chainData, client) => {
     try {
         const database = client.db('fomo')
-        const collection = database.collection('tipsy')
+        const collection = database.collection('judas')
         chainData.timestamp = Date.now()
         let newChainData = Object.assign({}, chainData)
         newChainData._id = ObjectId()
