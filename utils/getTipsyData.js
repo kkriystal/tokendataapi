@@ -4,8 +4,8 @@ const numeral = require("numeral")
 const db = require("./db")
 
 const gettipsyData = async (web3s) => {
-    const {bsc_web3} = web3s
-    const bsc_blockNumber = await bsc_web3.eth.getBlockNumber() 
+    const {web3, bsc_web3} = web3s
+    const blockNumber = await web3.eth.getBlockNumber() 
     const {tipsy_address} = addresses
 
     // Set number formatting default
@@ -13,7 +13,7 @@ const gettipsyData = async (web3s) => {
   
 
     // Instantiate all smart contract object(s)
-    let tipsy = new bsc_web3.eth.Contract(tipsyAbi, tipsy_address.contract)
+    let tipsy = new web3.eth.Contract(tipsyAbi, tipsy_address.contract)
     
     // For converting to proper number of decimals
     const convert = (num, decimal) => {
@@ -23,7 +23,7 @@ const gettipsyData = async (web3s) => {
     // Make tokenData object
 
     let tokenData = {
-      bsc: {
+      eth: {
           totalSupply: {value: 0},
           circulatingSupply: {value: 0},
       }
@@ -31,33 +31,33 @@ const gettipsyData = async (web3s) => {
   
 
     // Get base values 
-    tokenData.bsc.totalSupply.value = await tipsy.methods.totalSupply().call()
+    tokenData.eth.totalSupply.value = await tipsy.methods.totalSupply().call()
 
 
     // Circulating supply
-    tokenData.bsc.circulatingSupply.value = tokenData.bsc.totalSupply.value
+    tokenData.eth.circulatingSupply.value = tokenData.eth.totalSupply.value
 
     // Set up descriptions
-    tokenData.bsc.totalSupply.description = "Total supply of tipsy on BSC"
+    tokenData.eth.totalSupply.description = "Total supply of judas on ETH"
   
-    tokenData.bsc.circulatingSupply.description = "Circulating supply of tipsy on BSC"
+    tokenData.eth.circulatingSupply.description = "Circulating supply of judas on ETH"
   
   
     // Set names
   
-    tokenData.bsc.totalSupply.name = "Total Supply BSC"
+    tokenData.eth.totalSupply.name = "Total Supply BSC"
   
-    tokenData.bsc.circulatingSupply.name = "Circulating Supply BSC"
+    tokenData.eth.circulatingSupply.name = "Circulating Supply BSC"
   
      
     // Set converted and formatted value, block, and timestamp
-    const tokendata_bsc = tokenData.bsc
+    const tokendata = tokenData.eth
 
     Object.keys(tokendata_bsc).forEach(key => {
-      tokendata_bsc[key].value = convert(tokendata_bsc[key].value, 18)
-      tokendata_bsc[key].formattedValue = numeral(tokendata_bsc[key].value).format()
-      tokendata_bsc[key].block = bsc_blockNumber
-      tokendata_bsc[key].timestamp = Date()
+      tokendata[key].value = convert(tokendata[key].value, 18)
+      tokendata[key].formattedValue = numeral(tokendata[key].value).format()
+      tokendata[key].block = blockNumber
+      tokendata[key].timestamp = Date()
     })
   
     
