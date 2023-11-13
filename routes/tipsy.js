@@ -6,26 +6,26 @@ app.get('/', (req, res) => {
   res.json(req.chainData)
 })
 
-app.get('/bsc', (req, res) => {
-  res.json(req.chainData.bsc)
+app.get('/eth', (req, res) => {
+  res.json(req.chainData.eth)
 })
 
 
-app.get('/bsc/total', (req, res) => {
-  res.json(req.chainData.bsc.totalSupply.value)
+app.get('/eth/total', (req, res) => {
+  res.json(req.chainData.eth.totalSupply.value)
 })
 
-app.get('/bsc/circulating', (req, res) => {
-  res.json(req.chainData.bsc.circulatingSupply.value)
+app.get('/eth/circulating', (req, res) => {
+  res.json(req.chainData.eth.circulatingSupply.value)
 })
 
 
-app.get('/bsc/total/details', (req, res) => {
-  res.json(req.chainData.bsc.totalSupply)
+app.get('/eth/total/details', (req, res) => {
+  res.json(req.chainData.eth.totalSupply)
 })
  
-app.get('/bsc/circulating/details', (req, res) => {
-  res.json(req.chainData.bsc.circulatingSupply)
+app.get('/eth/circulating/details', (req, res) => {
+  res.json(req.chainData.eth.circulatingSupply)
 })
 
 module.exports = app
