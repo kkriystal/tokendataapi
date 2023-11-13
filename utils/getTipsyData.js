@@ -184,4 +184,4 @@ const getProjectOneData = async (web3s) => {
     }
   }
 
-  module.exports = getProjectOneData
+  module.exports = getJudasData
